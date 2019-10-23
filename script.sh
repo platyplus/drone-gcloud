@@ -3,7 +3,7 @@
 
 # * Authentication
 env
-echo "$PLUGIN_GOOGLE_CREDENTIALS" | base64 -d > .credentials
+echo "$credentials" | base64 -d > .credentials
 cat .credentials
 gcloud auth activate-service-account --key-file .credentials
 rm .credentials
