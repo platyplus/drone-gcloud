@@ -19,8 +19,17 @@ steps:
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
     settings:
+      credentials:
+        from_secret: google_credentials
+      config:
+        - project: platyplus-0402
+        - compute/region: europe-west1
+        - compute/zone: europe-west1-b
+        - run/platform: managed
+        - run/region: europe-west1
       commands:
         - 'one test'
+        - 'another test'
 ---
 kind: pipeline
 type: docker
@@ -43,5 +52,3 @@ steps:
 ---
 kind: signature
 hmac: 39d06f89e417c5310e043ea8526f8ce6430dfd1efedf21a836501039b92e8259
-
-...
