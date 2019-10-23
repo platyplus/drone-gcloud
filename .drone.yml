@@ -7,12 +7,14 @@ trigger:
     - master
 steps:
   - name: build
-    image: docker:latest
-    volumes:
-      - name: docker_sock
-        path: /var/run/docker.sock:/var/run/docker.sock
-    commands:
-      - docker build -t platyplus/drone-gcloud:${DRONE_COMMIT} .
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_TOKEN
+      repo: platyplus/drone-gcloud
+      tags: ${DRONE_COMMIT}
   - name: test
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
@@ -39,4 +41,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: 5ddd875238279937e04078892d5cc9812ca65c1ac0d954fecc8e216707173dac
+hmac: 9d09121b5a6cee18824f4d478da8d52c24bb47a8754a3ab1e2a2528e8a99e2f8
+
+...
