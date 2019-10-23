@@ -1,8 +1,8 @@
 {
   "name": "drone-gcloud",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
-  "description": "> TODO: description",
+  "description": "Drone.io CI plugin for Google Cloud",
   "author": "Pierre-Louis Mercereau <24897252+plmercereau@users.noreply.github.com>",
   "homepage": "https://github.com/platyplus/drone-gcloud#readme",
   "license": "MIT",

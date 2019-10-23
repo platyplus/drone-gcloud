@@ -1,40 +1,40 @@
 ---
-kind: pipeline
-type: docker
-name: test
-trigger:
-  branch:
-    - master
-steps:
-  - name: build
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DOCKER_USERNAME
-      password:
-        from_secret: DOCKER_TOKEN
-      repo: platyplus/drone-gcloud
-      tags: ${DRONE_COMMIT}
-  - name: test
-    depends_on: [build]
-    image: platyplus/drone-gcloud:${DRONE_COMMIT}
-    environment:
-      PROJECT_ID:
-        from_secret: project_id
-    settings:
-      credentials:
-        from_secret: google_credentials
-      config:
-        - project: $$PROJECT_ID
-        - compute/region: europe-west1
-        - compute/zone: europe-west1-b
-        - run/platform: managed
-        - run/region: europe-west1
-      commands:
-        - projects list
-        - PROJECT_NAME: projects describe $$PROJECT_ID --format="get(name)"
-        - sql instances describe $$PROJECT_NAME --format="get(connectionName)"
----
+# ---
+# kind: pipeline
+# type: docker
+# name: test
+# trigger:
+#   branch:
+#     - master
+# steps:
+#   - name: build
+#     image: plugins/docker
+#     settings:
+#       username:
+#         from_secret: DOCKER_USERNAME
+#       password:
+#         from_secret: DOCKER_TOKEN
+#       repo: platyplus/drone-gcloud
+#       tags: ${DRONE_COMMIT}
+#   - name: test
+#     depends_on: [build]
+#     image: platyplus/drone-gcloud:${DRONE_COMMIT}
+#     environment:
+#       PROJECT_ID:
+#         from_secret: project_id
+#     settings:
+#       credentials:
+#         from_secret: google_credentials
+#       config:
+#         - project: $$PROJECT_ID
+#         - compute/region: europe-west1
+#         - compute/zone: europe-west1-b
+#         - run/platform: managed
+#         - run/region: europe-west1
+#       commands:
+#         - projects list
+#         - PROJECT_NAME: projects describe $$PROJECT_ID --format="get(name)"
+#         - sql instances describe $$PROJECT_NAME --format="get(connectionName)"
 kind: pipeline
 type: docker
 name: deploy
@@ -55,4 +55,4 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: db18658f8aa4c39c21d2d8e7dbdf35f426a0938b991dc74f9b191e27781f4cc8
+hmac: 0e5a17978f113a6a69460a23607fb746d3228edb957329fc4ce9bf9cacfdc780

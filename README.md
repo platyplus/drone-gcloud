@@ -1,4 +1,4 @@
-# Google Cloud plugin for Drone CI
+# Drone.io CI plugin for Google Cloud
 
 ## Example
 
