@@ -19,7 +19,7 @@ steps:
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
     settings:
-      CREDENTIALS:
+      credentials:
         from_secret: google_credentials
       config:
         - project: platyplus-0402
@@ -30,15 +30,6 @@ steps:
       commands:
         - 'sql instances describe platyplus --format="get(connectionName)"'
         - CLOUDSQL_INSTANCE: 'sql instances describe platyplus --format="get(connectionName)"'
-      t1:
-        - 'one string'
-        - another string
-      t2:
-        - one string
-        - another
-      t3:
-        - param: value1
-        - param2: value2
 ---
 kind: pipeline
 type: docker

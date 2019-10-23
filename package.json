@@ -6,12 +6,17 @@
   "author": "Pierre-Louis Mercereau <24897252+plmercereau@users.noreply.github.com>",
   "homepage": "https://github.com/platyplus/drone-gcloud#readme",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "test": "node -r dotenv/config index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/platyplus/platyplus.git"
   },
   "bugs": {
     "url": "https://github.com/platyplus/platyplus/issues"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
   }
 }
