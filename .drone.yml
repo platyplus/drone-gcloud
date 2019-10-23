@@ -1,0 +1,41 @@
+---
+kind: pipeline
+type: docker
+name: test
+trigger:
+  branch:
+    - master
+steps:
+  - name: build
+    image: plugins/docker
+    settings:
+      dry_run: true
+  - name: publish
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_TOKEN
+      repo: platyplus/drone-gcloud
+      auto_tag: true
+      tags: latest
+---
+kind: pipeline
+type: docker
+name: deploy
+trigger:
+  branch:
+    - master
+depends_on: [test]
+steps:
+  - name: publish
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DOCKER_USERNAME
+      password:
+        from_secret: DOCKER_TOKEN
+      repo: platyplus/drone-gcloud
+      auto_tag: true
+      tags: latest
