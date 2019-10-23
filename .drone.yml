@@ -11,6 +11,7 @@ steps:
     settings:
       dry_run: true
   - name: publish
+    depends_on: [build]
     image: plugins/docker
     settings:
       username:
@@ -39,3 +40,6 @@ steps:
       repo: platyplus/drone-gcloud
       auto_tag: true
       tags: latest
+---
+kind: signature
+hmac: d6d667bdc846550602532e0aab1ce2bfdb35329d3076e7ce5737d320603cc7a6
