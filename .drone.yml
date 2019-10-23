@@ -11,18 +11,12 @@ steps:
     settings:
       dry_run: true
       repo: platyplus/drone-gcloud
-      tags: latest
-  - name: publish
+      tags: ${DRONE_COMMIT}
+  - name: test
     depends_on: [build]
-    image: plugins/docker
+    image: platyplus/drone-gcloud:${DRONE_COMMIT}
     settings:
-      username:
-        from_secret: DOCKER_USERNAME
-      password:
-        from_secret: DOCKER_TOKEN
-      repo: platyplus/drone-gcloud
-      auto_tag: true
-      tags: latest
+      test: 'one test'
 ---
 kind: pipeline
 type: docker
@@ -44,4 +38,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: d6d667bdc846550602532e0aab1ce2bfdb35329d3076e7ce5737d320603cc7a6
+hmac: 621b7368bb77a33d66f2c5c12fb21dbeac129d977304f2c0c6f3e89aad3725ec
+
+...
