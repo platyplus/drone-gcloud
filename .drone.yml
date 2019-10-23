@@ -51,4 +51,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: 39d06f89e417c5310e043ea8526f8ce6430dfd1efedf21a836501039b92e8259
+hmac: f369ef2b7328cf5739a9822e304561a9fa44fd5a502ded63fa2a60a1c93d7d5d
+
+...
