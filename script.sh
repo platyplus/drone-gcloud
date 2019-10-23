@@ -1,5 +1,5 @@
 #!/bin/sh
-printf "%s" "$PLUGIN_GOOGLE_CREDENTIALS" > /tmp/.credentials
+echo "$PLUGIN_GOOGLE_CREDENTIALS" | base64 -D > /tmp/.credentials
 cat /tmp/credentials
 gcloud auth activate-service-account --key-file /tmp/.credentials
 rm /tmp/.credentials
