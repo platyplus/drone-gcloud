@@ -27,13 +27,18 @@ steps:
         - compute/zone: europe-west1-b
         - run/platform: managed
         - run/region: europe-west1
-      exports:
-        CLOUDSQL_INSTANCE: sql instances describe platyplus --format="get(connectionName)"
       commands:
         - 'sql instances describe platyplus --format="get(connectionName)"'
-      mixed:
         - CLOUDSQL_INSTANCE: 'sql instances describe platyplus --format="get(connectionName)"'
-        - 'direct command'
+      t1:
+        - 'one string'
+        - another string
+      t2:
+        - one string
+        - another
+      t3:
+        - param: value1
+        - param2: value2
 ---
 kind: pipeline
 type: docker
@@ -56,5 +61,3 @@ steps:
 ---
 kind: signature
 hmac: 629accbae35de12e99c8bb3aa3e26027fc9cade1a3bb02a4785cd8d273bf6936
-
-...
