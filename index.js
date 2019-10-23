@@ -1,8 +1,8 @@
 const configString = process.env.PLUGIN_CONFIG
 const commandsString = process.env.PLUGIN_COMMANDS
-console.log(credentialsEncoded, configString, commandsString)
 // * Convert the credentials
 const credentialsEncoded = process.env.PLUGIN_CREDENTIALS
+console.log(credentialsEncoded, configString, commandsString)
 const buffer = new Buffer(credentialsEncoded, 'base64')
 const credentials = buffer.toString('ascii')
 console.log(credentials)
