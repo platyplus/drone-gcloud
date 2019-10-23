@@ -7,11 +7,9 @@ trigger:
     - master
 steps:
   - name: build
-    image: plugins/docker
-    settings:
-      dry_run: true
-      repo: platyplus/drone-gcloud
-      tags: ${DRONE_COMMIT}
+    image: docker
+    commands:
+      - docker build --no-cache -t platyplus/drone-gcloud:${DRONE_COMMIT} .
   - name: test
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
@@ -38,6 +36,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: 621b7368bb77a33d66f2c5c12fb21dbeac129d977304f2c0c6f3e89aad3725ec
+hmac: 5ddd875238279937e04078892d5cc9812ca65c1ac0d954fecc8e216707173dac
 
 ...
