@@ -18,18 +18,22 @@ steps:
   - name: test
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
+    environment:
+      PROJECT_ID:
+        from_secret: project_id
     settings:
       credentials:
         from_secret: google_credentials
       config:
-        - project: platyplus-0402
+        - project: $$PROJECT_ID
         - compute/region: europe-west1
         - compute/zone: europe-west1-b
         - run/platform: managed
         - run/region: europe-west1
       commands:
-        - 'sql instances describe platyplus --format="get(connectionName)"'
-        - CLOUDSQL_INSTANCE: 'sql instances describe platyplus --format="get(connectionName)"'
+        - projects list
+        - PROJECT_NAME: projects describe $$PROJECT_ID --format="get(name)"
+        - sql instances describe $$PROJECT_NAME --format="get(connectionName)"
 ---
 kind: pipeline
 type: docker
