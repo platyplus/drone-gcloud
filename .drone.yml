@@ -7,10 +7,10 @@ trigger:
     - master
 steps:
   - name: build
-    image: drone/docker
+    image: docker:latest
     volumes:
       - name: docker_sock
-        path: /var/run/docker.sock
+        path: /var/run/docker.sock:/var/run/docker.sock
     commands:
       - docker build -t platyplus/drone-gcloud:${DRONE_COMMIT} .
   - name: test
