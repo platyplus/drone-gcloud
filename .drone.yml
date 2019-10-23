@@ -31,6 +31,9 @@ steps:
         CLOUDSQL_INSTANCE: sql instances describe platyplus --format="get(connectionName)"
       commands:
         - 'sql instances describe platyplus --format="get(connectionName)"'
+      mixed:
+        - CLOUDSQL_INSTANCE: 'sql instances describe platyplus --format="get(connectionName)"'
+        - 'direct command'
 ---
 kind: pipeline
 type: docker
@@ -52,6 +55,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: fd8479db9b64231b02161ce8cdd3d78e4d3062c10c9141a266c49ad5e0bed8ce
+hmac: 629accbae35de12e99c8bb3aa3e26027fc9cade1a3bb02a4785cd8d273bf6936
 
 ...
