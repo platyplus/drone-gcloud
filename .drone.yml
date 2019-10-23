@@ -10,6 +10,8 @@ steps:
     image: plugins/docker
     settings:
       dry_run: true
+      repo: platyplus/drone-gcloud
+      tags: latest
   - name: publish
     depends_on: [build]
     image: plugins/docker
