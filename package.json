@@ -1,0 +1,17 @@
+{
+  "name": "drone-gcloud",
+  "version": "0.0.1",
+  "private": true,
+  "description": "> TODO: description",
+  "author": "Pierre-Louis Mercereau <24897252+plmercereau@users.noreply.github.com>",
+  "homepage": "https://github.com/platyplus/drone-gcloud#readme",
+  "license": "MIT",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/platyplus/platyplus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/platyplus/platyplus/issues"
+  }
+}

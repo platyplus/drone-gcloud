@@ -18,9 +18,6 @@ steps:
   - name: test
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
-    environment:
-      CREDENTIALS:
-        from_secret: google_credentials
     settings:
       CREDENTIALS:
         from_secret: google_credentials
