@@ -2,10 +2,24 @@
 const fs = require('fs')
 const child_process = require('child_process')
 const TEMP_CREDENTIALS_FILE = '.credentials'
+
+// * Exit the script with an error
 const exit = (message, error = undefined) => {
   console.error(message)
   if (error) console.error(error)
   process.exit(1)
+}
+
+// Run a command
+const run = (command, errorMessage) => {
+  try {
+    console.log(`Run: ${command}`)
+    const result = child_process.execSync(command).toString()
+    console.log(result)
+    return result.trim()
+  } catch (error) {
+    exit(errorMessage, error)
+  }
 }
 
 const getSingleton = (item, { key, value } = {}) => {
@@ -32,13 +46,10 @@ try {
   exit('Invalid credentials.', error)
 }
 // * authenticate
-try {
-  const command = `gcloud auth activate-service-account --key-file ${TEMP_CREDENTIALS_FILE}`
-  console.log(`Run: ${command}`)
-  // child_process.execSync(command)
-} catch (error) {
-  exit('Authentication failed. See the following error:', error)
-}
+run(
+  `gcloud auth activate-service-account --key-file ${TEMP_CREDENTIALS_FILE}`,
+  'Authentication failed. See the following error:'
+)
 // * Delete the temporaty credentials file
 try {
   fs.unlinkSync(TEMP_CREDENTIALS_FILE)
@@ -51,17 +62,14 @@ const configString = process.env.PLUGIN_CONFIG
 if (configString) {
   try {
     let config = JSON.parse(configString)
-    //   if (typeof config === 'string') config = config.split(',')
+    if (typeof config === 'string') config = config.split(',')
     for (const item of config) {
       const { key, value } = getSingleton(item)
       if (!key) exit(`Invalid configuration key: ${item}`, error)
-      try {
-        const command = `gcloud config set ${key} ${value}`
-        console.log(`Run: ${command}`)
-        // child_process.execSync(command)
-      } catch (error) {
-        exit(`Error in the configuration at ${item}`, error)
-      }
+      run(
+        `gcloud config set ${key} ${value}`,
+        `Error in the configuration at ${item}`
+      )
     }
   } catch (error) {
     exit('Error in loading the Google Cloud configuration.', error)
@@ -89,13 +97,8 @@ if (commandsString) {
           }
         }
       }
-      console.log(`Run: gcloud ${value}`)
-      const result = child_process
-        .execSync(`gcloud ${value}`)
-        .toString()
-        .trim()
+      const result = run(`gcloud ${value}`, 'Error in the command')
       if (key) process.env[key] = result
-      console.log(result)
     }
   } catch (error) {
     exit('Error in the Google Cloud commands.', error)
