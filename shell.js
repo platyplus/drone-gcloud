@@ -1,6 +1,6 @@
 'use strict'
 const child_process = require('child_process')
-const { LOG_LEVELS, log } = require('./log')
+const { LOG_LEVELS, log, error } = require('./log')
 
 // * Run a command
 const exec = (command, errorMessage) => {
