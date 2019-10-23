@@ -1,4 +1,6 @@
 #!/bin/sh
+# TODO activate set -e
+
 # * Authentication
 echo "$PLUGIN_GOOGLE_CREDENTIALS" | base64 -d > .credentials
 cat .credentials
