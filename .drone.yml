@@ -19,7 +19,8 @@ steps:
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
     settings:
-      test: 'one test'
+      commands:
+        - 'one test'
 ---
 kind: pipeline
 type: docker
@@ -41,6 +42,6 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: 9d09121b5a6cee18824f4d478da8d52c24bb47a8754a3ab1e2a2528e8a99e2f8
+hmac: 39d06f89e417c5310e043ea8526f8ce6430dfd1efedf21a836501039b92e8259
 
 ...
