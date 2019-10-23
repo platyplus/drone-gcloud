@@ -19,9 +19,11 @@ steps:
     depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
     environment:
-      credentials:
+      CREDENTIALS:
         from_secret: google_credentials
     settings:
+      CREDENTIALS:
+        from_secret: google_credentials
       config:
         - project: platyplus-0402
         - compute/region: europe-west1

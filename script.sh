@@ -3,9 +3,12 @@
 
 # * Authentication
 env
-echo "$credentials" | base64 -d > .credentials
+echo "${CREDENTIALS}" | base64 -d > .credentials
+echo "${PLUGIN_CREDENTIALS}" | base64 -d > .credentials2
+ls -la
 cat .credentials
 gcloud auth activate-service-account --key-file .credentials
+gcloud auth activate-service-account --key-file .credentials2
 rm .credentials
 
 echo "$PLUGIN_t1"
