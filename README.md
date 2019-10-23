@@ -18,6 +18,6 @@ steps:
           - compute/region: europe-west1
         commands:
           - projects list
-          - PROJECT_NAME: projects describe $$project_id --format="get(name)"
+          - PROJECT_NAME: projects describe $$PROJECT_ID --format="get(name)"
           - sql instances describe $$PROJECT_NAME --format="get(connectionName)"
 ```

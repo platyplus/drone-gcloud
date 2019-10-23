@@ -2,6 +2,7 @@
 # TODO activate set -e
 
 # * Authentication
+env
 echo "$PLUGIN_GOOGLE_CREDENTIALS" | base64 -d > .credentials
 cat .credentials
 gcloud auth activate-service-account --key-file .credentials
@@ -29,9 +30,8 @@ echo "${PLUGIN_COMMANDS}"
 #     export ${param}=$(gcloud ${value})
 # done
 for row in $(echo "${PLUGIN_COMMANDS}" | jq -r '.[] | @base64'); do
-    decoded=$(echo "$row" | base64 --decode)
+    decoded=$(echo "$row" | base64 -d)
     if echo "$decoded" | jq -e . >/dev/null 2>&1; then
-        echo "object"
         param=$(echo ${decoded} | jq -r 'keys[0]')
         value=$(echo ${decoded} | jq -r '.[keys[0]]')
         export $param="$(gcloud $value)"
