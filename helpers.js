@@ -23,9 +23,17 @@ const joinParameter = (param, separator1 = ',', separator2 = '=') => {
 
 const parse = (value, defaultValue = []) => {
   if (value === undefined) return defaultValue
-  value = JSON.parse(value)
-  if (typeof value === 'string') value = value.split(',')
-  return value
+  try {
+    value = JSON.parse(value)
+    if (typeof value === 'object') {
+      if (!Array.isArray(value))
+        value = Object.keys(value).map(key => ({ [key]: value[key] }))
+    }
+  } catch (err) {
+    if (typeof value === 'string') value = value.split(',')
+  } finally {
+    return value
+  }
 }
 
 module.exports = { getParameter, joinParameter, parse }

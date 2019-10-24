@@ -25,11 +25,11 @@ steps:
       credentials:
         from_secret: google_credentials
       config:
-        - project: $$PROJECT_ID
-        - compute/region: europe-west1
-        - compute/zone: europe-west1-b
-        - run/platform: managed
-        - run/region: europe-west1
+        project: $$PROJECT_ID
+        compute/region: europe-west1
+        compute/zone: europe-west1-b
+        run/platform: managed
+        run/region: europe-west1
       commands:
         - projects list
         - command: projects describe $$PROJECT_ID
@@ -47,21 +47,21 @@ steps:
       credentials:
         from_secret: google_credentials
       config:
-        - project: platyplus-0402
-        - compute/region: europe-west1
-        - compute/zone: europe-west1-b
-        - run/platform: managed
-        - run/region: europe-west1
+        project: platyplus-0402
+        compute/region: europe-west1
+        compute/zone: europe-west1-b
+        run/platform: managed
+        run/region: europe-west1
       commands:
-        - command: gcloud beta run deploy authentication
+        - command: beta run deploy authentication
           flags:
             - image: gcr.io/platyplus-0402/authentication-service:master
             - allow-unauthenticated
             - timeout 900
             - set-env-vars:
-                - PUBLIC_KEY: pubkey
-                - PRIVATE_KEY: privkey
-                - HASURA_GRAPHQL_ADMIN_SECRET: secret
+              PUBLIC_KEY: pubkey
+              PRIVATE_KEY: privkey
+              HASURA_GRAPHQL_ADMIN_SECRET: secret
 ---
 kind: pipeline
 type: docker
