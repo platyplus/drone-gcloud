@@ -40,6 +40,26 @@ steps:
         - command: sql instances describe $$PROJECT_NAME
           flags:
             - format: '"get(connectionName)"'
+  - name: test2
+    depends_on: [test]
+    image: platyplus/drone-gcloud:${DRONE_COMMIT}
+    settings:
+      config:
+        - project: platyplus-0402
+        - compute/region: europe-west1
+        - compute/zone: europe-west1-b
+        - run/platform: managed
+        - run/region: europe-west1
+      commands:
+        - command: gcloud beta run deploy authentication
+          flags:
+            - image: gcr.io/platyplus-0402/authentication-service:master
+            - allow-unauthenticated
+            - timeout 900
+            - set-env-vars:
+                - PUBLIC_KEY: pubkey
+                - PRIVATE_KEY: privkey
+                - HASURA_GRAPHQL_ADMIN_SECRET: secret
 ---
 kind: pipeline
 type: docker
