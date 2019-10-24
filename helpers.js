@@ -11,14 +11,16 @@ const getParameter = (item, { key, value } = {}) => {
 }
 
 const joinParameter = (param, separator1 = ',', separator2 = '=') => {
-  if (typeof param === 'string') return param
-  else if (Array.isArray(param))
-    return param.map(item => joinParameter(item, separator2)).join(separator1)
-  else {
-    return Object.keys(param)
-      .map(key => `${key}${separator2}${param[key]}`)
-      .join(separator1)
+  if (typeof param === 'object') {
+    if (Array.isArray(param))
+      return param.map(item => joinParameter(item, separator2)).join(separator1)
+    else {
+      return Object.keys(param)
+        .map(key => `${key}${separator2}${param[key]}`)
+        .join(separator1)
+    }
   }
+  return param
 }
 
 const parse = (value, defaultValue = []) => {
