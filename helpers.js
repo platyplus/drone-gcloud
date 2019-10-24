@@ -23,7 +23,6 @@ const joinParameter = (param, separator1 = ',', separator2 = '=') => {
 
 const parse = (value, defaultValue = []) => {
   if (value === undefined) return defaultValue
-  console.log(value)
   try {
     value = JSON.parse(value)
     if (typeof value === 'object') {

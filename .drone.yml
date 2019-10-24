@@ -40,6 +40,8 @@ steps:
         - command: sql instances describe $$PROJECT_NAME
           flags:
             - format: '"get(connectionName)"'
+        - command: dummy dummy
+          skipError: true
   - name: test2
     depends_on: [test]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
@@ -57,7 +59,7 @@ steps:
           flags:
             - image: gcr.io/platyplus-0402/authentication-service:master
             - allow-unauthenticated
-            - timeout 900
+            - timeout: 900
             - set-env-vars:
                 PUBLIC_KEY: pubkey
                 PRIVATE_KEY: privkey

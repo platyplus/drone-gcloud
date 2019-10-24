@@ -41,8 +41,6 @@ try {
 // * Run the commands
 try {
   for (let command of parse(process.env.PLUGIN_COMMANDS)) {
-    console.log('PARSED')
-    console.log(command)
     let { key, value } = getParameter(command, {
       key: 'export',
       value: 'command'
