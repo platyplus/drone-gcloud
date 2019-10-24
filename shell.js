@@ -4,14 +4,13 @@ const { LOG_LEVELS, log, error, warn } = require('./log')
 
 // * Run a command
 const exec = (command, errorMessage, skipError = false) => {
-  console.log(skipError)
   try {
     log(`${command}`, LOG_LEVELS.info)
     const result = child_process.execSync(command).toString()
     log(result)
     return result.trim()
   } catch (error) {
-    if (skipError) errorExit(errorMessage, error)
+    if (!skipError) errorExit(errorMessage, error)
     else warn(error)
   }
 }
