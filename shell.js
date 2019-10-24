@@ -10,8 +10,8 @@ const exec = (command, errorMessage, skipError = false) => {
     log(result)
     return result.trim()
   } catch (error) {
-    if (!skipError) errorExit(errorMessage, error)
-    else warn(error)
+    if (!skipError) errorExit(errorMessage, error.toString())
+    else warn(error.toString())
   }
 }
 
