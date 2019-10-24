@@ -5,7 +5,6 @@ name: deploy
 trigger:
   branch:
     - master
-depends_on: [test]
 steps:
   - name: publish
     image: plugins/docker
@@ -19,4 +18,4 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: f5c01614c00d5f3ef31e56c94c035d923d0908f13521cf0c1a8bc2cd10538a70
+hmac: 7f1c1ca3a419e37b3fe4484c5639adcfbcf65b110fc8819c1ea64f24a981eee9
