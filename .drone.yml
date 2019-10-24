@@ -43,6 +43,7 @@ steps:
         - command: dummy dummy
           skipError: true
   - name: test2
+    depends_on: [build]
     image: platyplus/drone-gcloud:${DRONE_COMMIT}
     settings:
       credentials:
