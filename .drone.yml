@@ -1,72 +1,6 @@
 ---
 kind: pipeline
 type: docker
-name: test
-trigger:
-  branch:
-    - master
-steps:
-  - name: build
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DOCKER_USERNAME
-      password:
-        from_secret: DOCKER_TOKEN
-      repo: platyplus/drone-gcloud
-      tags: ${DRONE_COMMIT}
-  - name: test
-    depends_on: [build]
-    image: platyplus/drone-gcloud:${DRONE_COMMIT}
-    environment:
-      PROJECT_ID:
-        from_secret: project_id
-    settings:
-      credentials:
-        from_secret: google_credentials
-      config:
-        project: $$PROJECT_ID
-        compute/region: europe-west1
-        compute/zone: europe-west1-b
-        run/platform: managed
-        run/region: europe-west1
-      commands:
-        - projects list
-        - command: projects describe $$PROJECT_ID
-          export: PROJECT_NAME
-          flags:
-            - format: '"get(name)"'
-            - quiet
-        - command: sql instances describe $$PROJECT_NAME
-          flags:
-            - format: '"get(connectionName)"'
-        - command: dummy dummy
-          skipError: true
-  - name: test2
-    depends_on: [build]
-    image: platyplus/drone-gcloud:${DRONE_COMMIT}
-    settings:
-      credentials:
-        from_secret: google_credentials
-      config:
-        project: platyplus-0402
-        compute/region: europe-west1
-        compute/zone: europe-west1-b
-        run/platform: managed
-        run/region: europe-west1
-      commands:
-        - command: beta run deploy authentication
-          flags:
-            - image: gcr.io/platyplus-0402/authentication-service:master
-            - allow-unauthenticated
-            - timeout: 900
-            - set-env-vars:
-                PUBLIC_KEY: pubkey
-                PRIVATE_KEY: privkey
-                HASURA_GRAPHQL_ADMIN_SECRET: secret
----
-kind: pipeline
-type: docker
 name: deploy
 trigger:
   branch:
@@ -85,4 +19,4 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: ae5e09275c8408aeac2e08ecd1d49d3d18b8b62aac566a6a4dad8eb962977614
+hmac: f5c01614c00d5f3ef31e56c94c035d923d0908f13521cf0c1a8bc2cd10538a70
