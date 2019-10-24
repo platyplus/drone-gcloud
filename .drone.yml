@@ -59,9 +59,9 @@ steps:
             - allow-unauthenticated
             - timeout 900
             - set-env-vars:
-              PUBLIC_KEY: pubkey
-              PRIVATE_KEY: privkey
-              HASURA_GRAPHQL_ADMIN_SECRET: secret
+                PUBLIC_KEY: pubkey
+                PRIVATE_KEY: privkey
+                HASURA_GRAPHQL_ADMIN_SECRET: secret
 ---
 kind: pipeline
 type: docker
