@@ -41,6 +41,8 @@ try {
 // * Run the commands
 try {
   for (let command of parse(process.env.PLUGIN_COMMANDS)) {
+    console.log('PARSED')
+    console.log(command)
     let { key, value } = getParameter(command, {
       key: 'export',
       value: 'command'
@@ -58,7 +60,7 @@ try {
     const result = exec(
       `gcloud ${value}`,
       'Error in the command',
-      command.silentError
+      command.skipError
     )
     if (key) process.env[key] = result
   }
