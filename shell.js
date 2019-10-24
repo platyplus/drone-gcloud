@@ -7,11 +7,10 @@ const exec = (command, errorMessage, skipError = false) => {
   try {
     log(`${command}`, LOG_LEVELS.info)
     const result = child_process.execSync(command).toString()
-    log(result)
+    log(result, skipError ? LOG_LEVELS.info : LOG_LEVELS.log)
     return result.trim()
   } catch (error) {
     if (!skipError) errorExit(errorMessage, error.toString())
-    else warn(error.toString())
   }
 }
 
