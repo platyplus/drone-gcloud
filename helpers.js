@@ -10,6 +10,17 @@ const getParameter = (item, { key, value } = {}) => {
   } else return { key: item[key], value: item[value] }
 }
 
+const joinParameter = (param, separator1 = ',', separator2 = '=') => {
+  if (typeof param === 'string') return param
+  else if (Array.isArray(param))
+    return param.map(item => joinParameter(item, separator2)).join(separator1)
+  else {
+    return Object.keys(param)
+      .map(key => `${key}${separator2}${param[key]}`)
+      .join(separator1)
+  }
+}
+
 const parse = (value, defaultValue = []) => {
   if (value === undefined) return defaultValue
   value = JSON.parse(value)
@@ -17,4 +28,4 @@ const parse = (value, defaultValue = []) => {
   return value
 }
 
-module.exports = { getParameter, parse }
+module.exports = { getParameter, joinParameter, parse }

@@ -2,7 +2,7 @@
 const fs = require('fs')
 const TMP_KEY_FILE = '.credentials'
 const { exec, errorExit } = require('./shell')
-const { getParameter, parse } = require('./helpers')
+const { getParameter, joinParameter, parse } = require('./helpers')
 
 const credentials =
   process.env.PLUGIN_CREDENTIALS || errorExit('No credentials')
@@ -50,12 +50,16 @@ try {
       else if (Array.isArray(command.flags)) {
         for (let flag of command.flags) {
           flag = getParameter(flag)
-          value +=
-            ' --' + (flag.key ? `${flag.key}="${flag.value}"` : flag.value)
+          value += ` --${flag.key || flag.value}`
+          if (flag.key) value += ` ${joinParameter(flag.value)}`
         }
       }
     }
-    const result = exec(`gcloud ${value}`, 'Error in the command')
+    const result = exec(
+      `gcloud ${value}`,
+      'Error in the command',
+      command.silentError
+    )
     if (key) process.env[key] = result
   }
 } catch (error) {

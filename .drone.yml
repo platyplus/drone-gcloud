@@ -35,10 +35,11 @@ steps:
         - command: projects describe $$PROJECT_ID
           export: PROJECT_NAME
           flags:
-            - format: get(name)
+            - format: '"get(name)"'
+            - quiet
         - command: sql instances describe $$PROJECT_NAME
           flags:
-            - format: get(connectionName)
+            - format: '"get(connectionName)"'
 ---
 kind: pipeline
 type: docker

@@ -1,23 +1,24 @@
 'use strict'
 const child_process = require('child_process')
-const { LOG_LEVELS, log, error } = require('./log')
+const { LOG_LEVELS, log, error, warn } = require('./log')
 
 // * Run a command
-const exec = (command, errorMessage) => {
+const exec = (command, errorMessage, silentError = false) => {
   try {
     log(`${command}`, LOG_LEVELS.info)
     const result = child_process.execSync(command).toString()
-    log(result, LOG_LEVELS.verbose)
+    log(result)
     return result.trim()
   } catch (error) {
-    errorExit(errorMessage, error)
+    if (silentError) errorExit(errorMessage, error)
+    else warn(error)
   }
 }
 
 // * Exit the script with an error
 const errorExit = (message, err = undefined) => {
-  error(message, LOG_LEVELS.info)
-  if (err) error(err, LOG_LEVELS.verbose)
+  error(message)
+  if (err) error(err, LOG_LEVELS.log)
   process.exit(1)
 }
 
