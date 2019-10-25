@@ -1,21 +1,22 @@
 'use strict'
 const fs = require('fs')
-const TMP_KEY_FILE = '.credentials'
+const TMP_KEY_FILE = '/tmp/.credentials'
 const { exec, errorExit } = require('./shell')
 const { getParameter, joinParameter, parse } = require('./helpers')
 
 const credentials =
-  process.env.PLUGIN_CREDENTIALS || errorExit('No credentials')
+  process.env.PLUGIN_CREDENTIALS || errorExit('No credentials key file')
 // * Store the credentials into a temporary file
 try {
   fs.writeFileSync(TMP_KEY_FILE, credentials, { encoding: 'base64' })
 } catch (error) {
-  errorExit('Invalid credentials.', error)
+  errorExit('Invalid credentials key file.', error)
 }
 // * authenticate
-exec(
+const auth = exec(
   `gcloud auth activate-service-account --key-file ${TMP_KEY_FILE}`,
-  'Authentication failed. See the following error:'
+  'Authentication failed. Error:',
+  true
 )
 // * Delete the temporaty credentials file
 try {
@@ -23,6 +24,7 @@ try {
 } catch (error) {
   errorExit('Impossible to remove the temporary credentials file.', error)
 }
+if (!auth) process.exit(1)
 
 // * Set the configuration, if it exists
 try {
