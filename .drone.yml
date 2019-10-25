@@ -1,50 +1,6 @@
 ---
 kind: pipeline
 type: docker
-name: test
-trigger:
-  branch:
-    - master
-steps:
-  - name: build
-    image: plugins/docker
-    settings:
-      username:
-        from_secret: DOCKER_USERNAME
-      password:
-        from_secret: DOCKER_TOKEN
-      repo: platyplus/drone-gcloud
-      tags: ${DRONE_COMMIT}
-  - name: test
-    depends_on: [build]
-    image: platyplus/drone-gcloud:${DRONE_COMMIT}
-    environment:
-      PROJECT_ID:
-        from_secret: project_id
-    settings:
-      credentials:
-        from_secret: google_credentials
-      config:
-        project: $$PROJECT_ID
-        compute/region: europe-west1
-        compute/zone: europe-west1-b
-        run/platform: managed
-        run/region: europe-west1
-      commands:
-        - projects list
-        - command: projects describe $$PROJECT_ID
-          export: PROJECT_NAME
-          flags:
-            - format: '"get(name)"'
-            - quiet
-        - command: sql instances describe $$PROJECT_NAME
-          flags:
-            - format: '"get(connectionName)"'
-        - command: dummy dummy
-          skipError: true
----
-kind: pipeline
-type: docker
 name: deploy
 trigger:
   branch:
@@ -62,4 +18,4 @@ steps:
       tags: latest
 ---
 kind: signature
-hmac: d25c5466626e7d0d61d10b468492ec1a243831f36d24c139471d308ae5c7aa7f
+hmac: 7f1c1ca3a419e37b3fe4484c5639adcfbcf65b110fc8819c1ea64f24a981eee9
