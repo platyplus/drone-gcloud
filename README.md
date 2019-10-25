@@ -21,7 +21,7 @@ steps:
           flags:
             - <flag-name>: <flag-value> # becomes: --<flagname> <flag-value>
             - <flag-name> # becomes: --<flag-name>
-            - <flag-name>: # becomes: --<flag-bame> <param1>=<value1>,<param2>=<value2>
+            - <flag-name>: # becomes: --<flag-name> <param1>=<value1>,<param2>=<value2>
                 <param-1>: <value1>
                 <param-2>: <value2>
 ```
