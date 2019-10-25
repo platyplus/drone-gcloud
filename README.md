@@ -17,8 +17,13 @@ steps:
         - <EXPORTED_ENV_VAR>: <gcloud command without the 'gcloud' prefix>
         - command: <gcloud command without the 'gcloud' prefix>
           export: <EXPORTED_ENV_VAR>
-          skipError: <don't stop the step if the command raises an error>
-          flags: <<<<<<<<-TODO->>>>>>>>
+          skipError: false # true will allow to go one with the next commands and steps if the current command raises an error
+          flags:
+            - <flag-name>: <flag-value> # becomes: --<flagname> <flag-value>
+            - <flag-name> # becomes: --<flag-name>
+            - <flag-name>: # becomes: --<flag-bame> <param1>=<value1>,<param2>=<value2>
+                <param-1>: <value1>
+                <param-2>: <value2>
 ```
 
 ## Credentials (required)
@@ -26,6 +31,8 @@ steps:
 The credentials parameter is a Google Cloud JSON key that has been encoded in Base64. See the [official documentation](https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-list-gcloud) to know how to generate the JSON file.
 
 Once the JSON file is generated, don't forget to encode it in Base64, for instance in running `base64 key.json`.
+
+The `project` config will be automatically set based on the `project_id` attribute found in the credentials.
 
 It is **strongly** recommended not to use the credentials directly in your `.drone.yml` file, but to store it as a secret. As an example:
 
@@ -40,7 +47,7 @@ steps:
 ###
 ```
 
-## Config (optional)
+## Configuration (optional)
 
 Google Cloud often require to set a specific configuration through `gcloud config set`. It is possible to set such configuration through the `config` setting, for instance:
 
@@ -70,13 +77,31 @@ A command can be written in different formats:
 
 ### String
 
-Example: `- projects list`
+The simplest way to run `gcloud <command>`:
+
+```yaml
+###
+steps:
+  - ###
+    settings:
+      commands:
+        - <command>
+###
+```
 
 ### Key/value pair
 
-Example: `- <DESTINATION>: <COMMAND>`.
+The result of `gcloud <command>` can be exported into the `<destination>` environment variable, so it can be used in further commands:
 
-In that case, the result of `gcloud <COMMAND>` will be exported into the `<DESTINATION>` environment variable, that can be used in further commands.
+```yaml
+###
+steps:
+  - ###
+    settings:
+      commands:
+        - <destination>: <command>
+###
+```
 
 ### Object
 
@@ -97,7 +122,7 @@ steps:
 
 ### Flags
 
-<<<<<<<<-TODO->>>>>>>>
+Command flags are defined in an array of different possible values:
 
 ## Example
 

@@ -26,6 +26,15 @@ try {
 }
 if (!auth) process.exit(1)
 
+// * Set the project id that has been found in the credentials key
+const project_id = JSON.parse(
+  new Buffer(credentials, 'base64').toString('ascii')
+).project_id
+exec(
+  `gcloud config set project ${project_id}`,
+  `Error setting the project id ${project_id}`
+)
+
 // * Set the configuration, if it exists
 try {
   for (const item of parse(process.env.PLUGIN_CONFIG)) {
